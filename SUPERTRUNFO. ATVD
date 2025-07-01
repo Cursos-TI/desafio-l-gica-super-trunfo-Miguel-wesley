@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <string.h>
+
+// Estrutura para armazenar os dados da cidade
+typedef struct {
+    char codigo[20];
+    char nome[50];
+    int populacao;
+    float area;
+    double pib;
+} Carta;
+
+void cadastraCarta(Carta *c) {
+    printf("Digite o código da cidade: ");
+    scanf("%s", c->codigo);
+    printf("Digite o nome da cidade: ");
+    scanf(" %[^\n]", c->nome);  // Lê linha com espaços
+    printf("Digite a população: ");
+    scanf("%d", &c->populacao);
+    printf("Digite a área (km²): ");
+    scanf("%f", &c->area);
+    printf("Digite o PIB (em bilhões): ");
+    scanf("%lf", &c->pib);
+}
+
+void comparaCartas(Carta c1, Carta c2) {
+    int pontos1 = 0, pontos2 = 0;
+
+    if (c1.populacao > c2.populacao) pontos1++; else if (c2.populacao > c1.populacao) pontos2++;
+    if (c1.area > c2.area) pontos1++; else if (c2.area > c1.area) pontos2++;
+    if (c1.pib > c2.pib) pontos1++; else if (c2.pib > c1.pib) pontos2++;
+
+    printf("\nComparação entre %s e %s:\n", c1.nome, c2.nome);
+    printf("População: %d vs %d\n", c1.populacao, c2.populacao);
+    printf("Área: %.2f km² vs %.2f km²\n", c1.area, c2.area);
+    printf("PIB: %.2lf bilhões vs %.2lf bilhões\n", c1.pib, c2.pib);
+
+    if (pontos1 > pontos2)
+        printf("\nA cidade vencedora é: %s\n", c1.nome);
+    else if (pontos2 > pontos1)
+        printf("\nA cidade vencedora é: %s\n", c2.nome);
+    else
+        printf("\nEmpate entre as cidades!\n");
+}
+
+int main() {
+    Carta carta1, carta2;
+
+    printf("Cadastro da primeira cidade:\n");
+    cadastraCarta(&carta1);
+
+    printf("\nCadastro da segunda cidade:\n");
+    cadastraCarta(&carta2);
+
+    comparaCartas(carta1, carta2);
+
+    return 0;
+}
